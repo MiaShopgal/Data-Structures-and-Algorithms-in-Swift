@@ -29,7 +29,7 @@ public struct LinkedList<Value> {
         debugPrint("before tails's next is \(String(describing: tail!.next))")
         tail!.next = Node(value: value)
 
-        debugPrint("after tails's next is \(tail!.next)")
+        debugPrint("after tails's next is \(String(describing: tail!.next))")
         debugPrint("before tails is \(tail!)")
         tail = tail!.next
         debugPrint("after tails is \(tail!)")
@@ -104,8 +104,16 @@ public struct LinkedList<Value> {
         return current.value
     }
 
-    
-    
+    public mutating func remove(after node: Node<Value>) -> Value? {
+        defer {
+            if node.next === tail {
+                tail = node
+            }
+            node.next = node.next?.next
+        }
+        return node.next?.value
+    }
+
 }
 
 extension LinkedList: CustomStringConvertible {
